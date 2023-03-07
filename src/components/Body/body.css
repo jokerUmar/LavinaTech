@@ -1,0 +1,33 @@
+.list{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    background: #FFFFFF;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 13px 15px;
+    list-style-type: none;
+    margin-right: 40px;
+}
+
+.name_title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    margin-top: 19px;
+    margin-bottom: 2px;
+}
+
+.author , .year {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    color: #757881;
+}

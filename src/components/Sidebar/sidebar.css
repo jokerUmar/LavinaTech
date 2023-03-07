@@ -1,0 +1,22 @@
+.sidebar{
+    max-width: 230px;
+    width: 100%;
+    background-color: rgba(35, 30, 30, 0.881);
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.sidebar_link{
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-top: 15px;
+}
