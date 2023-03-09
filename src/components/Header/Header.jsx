@@ -5,13 +5,19 @@ import { AppBar, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
-function Header({bars,setBars}) {
+function Header({bars,setBars,setHeaderValue,headerValue}) {
 
     let navigate = useNavigate()
 
     function handleLogout() {
         localStorage.removeItem("user")
         navigate("/")
+    }
+
+    function handleKeyUp(e) {
+        if (e.key == "Enter") {
+            setHeaderValue(e.target.value)
+        }
     }
 
 return (
@@ -30,7 +36,7 @@ return (
 
         <label  className='header_label'>
             <SearchIcon color='action' />
-            <input  type="text" placeholder='Search...' className='header_input' />
+            <input onKeyUp={handleKeyUp} type="text" placeholder='Search...' className='header_input' />
         </label>
         <button className='logout' onClick={handleLogout}>logout</button>
     </div>

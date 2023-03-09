@@ -28,11 +28,15 @@
 }
 
 .header_input {
+    max-width: 500px;
+    width: 100%;
+    margin: 0;
     background-color: #F8FAFD;
     border: none;
     outline: none;
     font-size: 18px;
     padding-left: 15px;
+    display: flex;
 }
 
 .logout{    

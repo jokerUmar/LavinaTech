@@ -2,15 +2,13 @@ import React,{useState , useContext} from 'react'
 import "./signUp.css"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AlertTitle, SvgIcon } from '@mui/material';
-import { MD5 } from 'crypto-js';
 import axios from 'axios';
-import { LoginContext } from '../../context/LoginContext';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import { SearchingContext } from '../../context/SearchingContext';
 
 function SignUp() {
 
-        let {loginData, setLoginData} = useContext(LoginContext)
         let navigate = useNavigate()
         
         const [email, setEmail] = useState("");
@@ -18,20 +16,17 @@ function SignUp() {
         const [secret, setSecret] = useState("");
         const [errorValue, setErrorValue] = useState(null);
 
-       let method = 'POST' 
-       let url = "https://no23.lavina.tech/signup"
-       let body = {
-        isbn:"9781118464465"
-       }
-       
+
+        let key =  "MyUserKey" + Math.floor(Math.random()*1000000)
+        let mySecret = "MyUserSecret" + String(Math.floor(Math.random()*10000000))
 
 
     function Login() {
         axios.post(`https://no23.lavina.tech/signup`,{  
           name: name,
           email:email,
-          key: String(Math.random()*1000000),
-          secret:String(Math.random()*10000000)
+          key: key,
+          secret: mySecret
         })
         .then(res => {
             setSecret(res?.data?.data)
@@ -39,17 +34,15 @@ function SignUp() {
             if (name.length > 0 && email.length>0) {
                    localStorage.setItem("user" , JSON.stringify(res?.data?.data))
                     setErrorValue(true)
-                }else if(name.length == 0 && email.length == 0) {
-                    setErrorValue(undefined)
-                }
-                
-                if (JSON.parse(localStorage.getItem("user"))) {
                     navigate("/home")
+                } else if(name.length == 0 && email.length == 0) {
+                    setErrorValue(undefined)
                 }
         })
         .catch(err => { 
             if (err) {
                 setErrorValue(false)
+                console.log(err);
             }
         })
 
