@@ -25,7 +25,6 @@ function Add() {
       }
     }
     
-    console.log(data);
     
     const createBook = () => {
         let { key, secret } = JSON.parse(localStorage.getItem("user"));

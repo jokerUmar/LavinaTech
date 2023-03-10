@@ -4,10 +4,10 @@ export const SearchingContext = createContext();
 
 export default function SearchingProvider({children}) {
 
-    const [data, setData] = useState({});
+    const [dataSearch, setDataSearch] = useState([]);
 
   return (
-    <SearchingContext.Provider value={{data,setData}}>
+    <SearchingContext.Provider value={{dataSearch,setDataSearch}}>
         {children}
     </SearchingContext.Provider>
   )

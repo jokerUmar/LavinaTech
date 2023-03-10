@@ -1,11 +1,16 @@
-import React,{useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import "./header.css"
 import SearchIcon from '@mui/icons-material/Search';
 import { AppBar, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { MD5 } from 'crypto-js';
+import { SearchingContext } from '../../context/SearchingContext';
 
 function Header({bars,setBars,setHeaderValue,headerValue}) {
+
+    let {dataSearch,setDataSearch} = useContext(SearchingContext)
 
     let navigate = useNavigate()
 
@@ -14,11 +19,45 @@ function Header({bars,setBars,setHeaderValue,headerValue}) {
         navigate("/")
     }
 
+    useEffect(()=>{
+        getSearchBooks()
+    },[headerValue])
+
     function handleKeyUp(e) {
         if (e.key == "Enter") {
             setHeaderValue(e.target.value)
         }
     }
+
+
+    
+  const hashGenerator = (string) => {
+    return MD5(string).toString();
+  };
+
+  
+  function getSearchBooks() {
+
+    let {key, secret} = JSON.parse(localStorage.getItem('user'))
+
+    let str =`GEThttps://no23.lavina.tech/books/${headerValue}` + secret;
+    
+    let sign = hashGenerator(str);
+
+    
+    axios.get(`https://no23.lavina.tech/books/${headerValue}`,{
+        headers:{
+          Key: key ,
+          Sign : sign
+        }
+      })
+      .then(res => {
+        setDataSearch(res.data.data)
+    })
+      .catch(err =>console.log(err))
+  }
+
+
 
 return (
 <div className='header'>

@@ -1,17 +1,22 @@
-import React,{useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import Header from '../../components/Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Body from '../../components/Body/Body';
 import "./home.css"
-import axios from 'axios';
+import { SearchingContext } from '../../context/SearchingContext';
 import { MD5 } from 'crypto-js';
+import axios from 'axios';
+import { DataContext } from '../../context/DataContext';
 
 function Home() {
 
+  let {data, setData} = useContext(DataContext)
+  let {dataSearch,setDataSearch} = useContext(SearchingContext)
+  
+  
+  const [isbn, setIsbn] = useState("");
   const [bars, setBars] = useState(true);           
-  const [data, setData] = useState([]);
   const [headerValue, setHeaderValue] = useState("");
-
 
   function handleClick(e) {
     if (e.target != document.querySelector(".sidebar") && bars == false) {
@@ -19,36 +24,37 @@ function Home() {
     }
   }
 
+  
   const hashGenerator = (string) => {
     return MD5(string).toString();
   };
 
   
-  useEffect(()=>{
-    getAllBooks()
-  },[])
+  const createBook = (e) => {
+    let { key, secret } = JSON.parse(localStorage.getItem("user"));
 
+    let body = {isbn:e.isbn};
 
-  function getAllBooks() {
-    let {key, secret} = JSON.parse(localStorage.getItem('user'))
+    let str ="POSThttps://no23.lavina.tech/books" + JSON.stringify(body) + secret;
 
-    let str ="GEThttps://no23.lavina.tech/books" + secret;
-    
     let sign = hashGenerator(str);
 
-    
-    axios.get("https://no23.lavina.tech/books",{
-        headers:{
-          Key: key ,
-          Sign : sign
-        }
+    axios.post("https://no23.lavina.tech/books", body, {
+        headers: {
+          Key: key,
+          Sign: sign,
+        },
+          body: {
+            isbn: e.isbn,
+          }
+        
+    })
+      .then((res) => {
+        data.push(res.data.data)
+      }).catch(err=>{
+        console.log(err?.response?.data?.message)
       })
-      .then(res => setData(res?.data?.data))
-      .catch(err => console.log(err))
-
-  }
-
-  
+  };
 
   return (
     <div className='home' onClick={(e)=>handleClick(e)}>
@@ -56,7 +62,25 @@ function Home() {
       <Header setBars={setBars} bars={bars} headerValue={headerValue} setHeaderValue={setHeaderValue} />
 
       <div className="container">
-        <Body data={data}  />  
+      <ul className='list-box'>
+        {
+
+          dataSearch != null &&  dataSearch.map(e => {
+            return String(e.title+e.author).length > 0 ? 
+             <li className='item' key={e.title+e.author+e.isbn+e.id}>
+
+              <img src={ !e.cover ?  "https://picsum.photos/200/300" : e.cover }  alt={e.book?.cover ? "" : "image is not defined"} width={"200px"} height={"200px"} />
+            
+              <p className='name_title'>{ !e.title ? "kitob nomi" : e.title}</p>
+              <p className='author'>{ !e.author ? "yozuvchi" : e.author}</p>
+              <p className='year'>{ !e.published ? "kitob nomi" : e.published}</p>
+              <button className='add_btn' onClick={()=>{createBook(e)}}>add</button>
+           </li> : ""
+
+            }) 
+        }
+    </ul>
+
       </div>
 
       {
