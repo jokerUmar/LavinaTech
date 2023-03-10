@@ -11,6 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 function AllBook() {
 
 const [bars, setBars] = useState(true);
+const [bool, setBool] = useState(true);
+
 let {data, setData} = useContext(DataContext)
 
 function handleClick(e) {
@@ -26,9 +28,8 @@ return MD5(string).toString();
 
 useEffect(()=>{
 getAllBooks()
-},[])
+},[bool])
 
-console.log(data);
 
 function getAllBooks() {
 let {key, secret} = JSON.parse(localStorage.getItem('user'))
@@ -45,12 +46,12 @@ Sign : sign
 }
 })
 .then(res => {
-console.log(res);
 setData(res?.data?.data)
 })
 .catch(err => console.log(err))
 
 }
+
 
 function handleLogout() {
     localStorage.removeItem("user")
@@ -80,7 +81,7 @@ return (
     </div>
 
     <div className="container">
-        <Body data={data} />
+        <Body data={data} setData={setData} getAllBooks={getAllBooks} bool={bool} setBool={setBool} />
     </div>
 
     {

@@ -20,7 +20,7 @@ function Sidebar({bars , setBars}) {
         <Link className='sidebar_link' to={'/delete'}>
           delete
         </Link>
-        <Link className='sidebar_link' to={'/add'}>
+        <Link className='sidebar_link' to={'/edit'}>
           edit
         </Link>
     </div>

@@ -7,6 +7,7 @@ import Home from './pages/Home/Home'
 import Add from './pages/Add/Add'
 import Delete from './pages/Delete/Delete'
 import AllBook from './pages/AllBook/AllBook'
+import Edit from './pages/Edit/Edit'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/add' element={<Add/>} />
         <Route path='/delete' element={<Delete/>} />
         <Route path='/allbook' element={<AllBook/>} />
+        <Route path='/edit' element={<Edit/>} />
       </Routes>
     </div>
   )

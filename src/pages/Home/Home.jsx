@@ -1,7 +1,6 @@
 import React,{useContext, useEffect, useState} from 'react'
 import Header from '../../components/Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar';
-import Body from '../../components/Body/Body';
 import "./home.css"
 import { SearchingContext } from '../../context/SearchingContext';
 import { MD5 } from 'crypto-js';
@@ -14,7 +13,6 @@ function Home() {
   let {dataSearch,setDataSearch} = useContext(SearchingContext)
   
   
-  const [isbn, setIsbn] = useState("");
   const [bars, setBars] = useState(true);           
   const [headerValue, setHeaderValue] = useState("");
 
