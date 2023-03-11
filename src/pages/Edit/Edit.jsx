@@ -80,7 +80,7 @@ return (
   <ul className='list-box'>
     {
 
-    filterData() && filterData().map(e => {
+    filterData().length ? filterData().map(e => {
     return String(e.title+e.author).length > 0 ?
     <li className='item' key={e.book.title+e.book.author+e.book.isbn+e.id}>
 
@@ -92,7 +92,7 @@ return (
       <p className='year'>{ !e.book.published ? "kitob nomi" : e.book.published}</p>
     </li> : ""
 
-    })
+    }) : <h1 style={{ width:"100%" ,textAlign:"center" , display:"block" , color:"red"}}>empty</h1>
     }
   </ul>
 

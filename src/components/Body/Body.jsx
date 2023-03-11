@@ -93,7 +93,7 @@ return (
 <div className='body'>
   <ul className='list-box'>
     {
-    data != null && data.map(e => {
+    data != null ? data.map(e => {
     return String(e.book?.title+e.book?.author).length > 0 ?
     <li className='item' key={e.book?.id}>
 
@@ -150,7 +150,7 @@ return (
     </li> : ""
 
 
-    })
+    }) : <h1 style={{width:"100%",color:"red", textAlign:"center"}}>empty</h1>
     }
   </ul>
 </div>

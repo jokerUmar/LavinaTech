@@ -78,7 +78,7 @@ return (
     <div className='body'>
     <ul className='list-box'>
         {
-            data != null &&  data.map(e => {
+            data != null ? data.map(e => {
             return String(e.book.author + e.book.title+ e.book.cover).length > 0 ? 
             <li className='item' key={e.book.id}>
 
@@ -90,7 +90,7 @@ return (
              <Button variant='contained'  onClick={()=>DeleteBooks(e.book.id)}  className='delete_btn' style={{backgroundColor:"red",marginTop:"10px"}} >delete</Button>
            </li> : ""
 
-            })
+            }) : <h1 style={{color:"red"}}>empty</h1>
         }
     </ul>
 </div>    </div>

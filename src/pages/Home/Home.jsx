@@ -84,7 +84,7 @@ function Home() {
               }} onClick={()=>{createBook(e)}} className='add_btn' >add</Button>
            </li> : ""
 
-            }) : homeLoad ? <h1 style={{color:"red"}}> no data </h1> : <CircularProgress color="success" />
+            }) : homeLoad ? <h1 style={{color:"red",width:"100%",textAlign:"center"}}> no data </h1> : <CircularProgress color="success" />
         }
     </ul>
 
