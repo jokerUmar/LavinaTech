@@ -11,8 +11,6 @@ import Edit from './pages/Edit/Edit'
 
 function App() {
 
-  let {loginData, setLoginData} = useContext(LoginContext)
-
   return (
     <div className="App">
       <Routes>

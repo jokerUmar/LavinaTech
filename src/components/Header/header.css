@@ -39,18 +39,47 @@
     display: flex;
 }
 
-.logout{    
-background: #0D75FF;
-border-radius: 4px;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-color: white;
-padding: 10px 23px;
-border: none;
+.logout {
+    background: #0D75FF;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: white;
+    padding: 10px 23px;
+    border: none;
 }
 
-.visibilty { 
-    visibility:hidden;
+.visibilty {
+    visibility: hidden;
 }
 
+@media only screen and (max-width:450px) {
+    .header {
+        padding: 5px;
+    }
+
+    .header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    .header_label {
+        padding: 5px;
+    }
+
+    .header_input {
+        font-size: 14px;
+        padding-left: 8px;
+    }
+
+    .logout {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 19px;
+        padding: 10px 15px;
+    }
+
+}

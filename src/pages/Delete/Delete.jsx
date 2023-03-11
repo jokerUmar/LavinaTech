@@ -5,6 +5,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import { MD5 } from 'crypto-js';
 import axios from 'axios';
 import { DataContext } from '../../context/DataContext';
+import { Button } from '@mui/material';
 
 function Delete() {
 
@@ -86,7 +87,7 @@ return (
               <p className='name_title'>{e.book.title ? e.book.title : "kitob nomi"}</p>
               <p className='author'>{e.book.author ? e.book.author : "yozuvchi"}</p>
               <p className='year'>{e.book.published ? e.book.published : "yil"}</p>
-             <button onClick={()=>DeleteBooks(e.book.id)} className='delete_btn'>delete</button>
+             <Button variant='contained'  onClick={()=>DeleteBooks(e.book.id)}  className='delete_btn' style={{backgroundColor:"red",marginTop:"10px"}} >delete</Button>
            </li> : ""
 
             })

@@ -8,7 +8,7 @@ import axios from 'axios';
 import { MD5 } from 'crypto-js';
 import { SearchingContext } from '../../context/SearchingContext';
 
-function Header({bars,setBars,setHeaderValue,headerValue}) {
+function Header({bars,setBars,setHeaderValue,headerValue,setHomeLoad}) {
 
     let {dataSearch,setDataSearch} = useContext(SearchingContext)
 
@@ -38,6 +38,7 @@ function Header({bars,setBars,setHeaderValue,headerValue}) {
   
   function getSearchBooks() {
 
+
     let {key, secret} = JSON.parse(localStorage.getItem('user'))
 
     let str =`GEThttps://no23.lavina.tech/books/${headerValue}` + secret;
@@ -53,6 +54,7 @@ function Header({bars,setBars,setHeaderValue,headerValue}) {
       })
       .then(res => {
         setDataSearch(res.data.data)
+        setHomeLoad(true)
     })
       .catch(err =>console.log(err))
   }

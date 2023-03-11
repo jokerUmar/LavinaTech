@@ -1,7 +1,7 @@
 import React,{useState , useContext} from 'react'
 import "./signUp.css"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AlertTitle, SvgIcon } from '@mui/material';
+import { AlertTitle, Button, CircularProgress, SvgIcon } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
@@ -10,6 +10,7 @@ import { SearchingContext } from '../../context/SearchingContext';
 function SignUp() {
 
         let navigate = useNavigate()
+        const [signLoad, setSignLoad] = useState(true);
         
         const [email, setEmail] = useState("");
         const [name, setName] = useState("");
@@ -29,15 +30,14 @@ function SignUp() {
           secret: mySecret
         })
         .then(res => {
-            setSecret(res?.data?.data)
-            
-            if (name.length > 0 && email.length>0) {
+                setSecret(res?.data?.data)
+             if (name.length > 0 && email.length>0) {
                    localStorage.setItem("user" , JSON.stringify(res?.data?.data))
                     setErrorValue(true)
                     navigate("/home")
-                } else if(name.length == 0 && email.length == 0) {
+            } else if(name.length == 0 && email.length == 0) {
                     setErrorValue(undefined)
-                }
+            }
         })
         .catch(err => { 
             if (err) {
@@ -45,9 +45,8 @@ function SignUp() {
                 console.log(err);
             }
         })
-
-
       }
+
       
 
 return (
@@ -73,8 +72,10 @@ return (
                 <AccountCircleIcon sx={{fontSize:"28px",color:"white"}} />
                <input type="text" placeholder='Name' onChange={(e)=>{e.target.value.length > 0 ? setName(e.target.value) : ""}}/>
             </label>
-
-            <button className='login_btn' onClick={Login}>LOGIN</button>
+            
+             {
+                signLoad ?  <Button className='login_btn' style={{marginTop:"15px"}} variant="contained" onClick={Login}>LOGIN</Button> :  <CircularProgress color="success" />
+             }
         </div>
     </div>
 </div>

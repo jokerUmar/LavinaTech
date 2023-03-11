@@ -1,6 +1,5 @@
 import React,{useState,useContext, useEffect} from 'react'
 import "./edit.css"
-import axios from 'axios'
 import { IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from '../../components/Sidebar/Sidebar';
@@ -58,13 +57,13 @@ return (
 
       }
       <div>
-        <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <FormControl sx={{ m: 1, minWidth: 140 }}>
           <InputLabel id="demo-simple-select-autowidth-label">edit</InputLabel>
           <Select labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={selectValue}
             onChange={handleChange} autoWidth label="Age">
-            <MenuItem sx={{ m: 1, minWidth: 170 }} value={0}>new</MenuItem>
-            <MenuItem sx={{ m: 1, minWidth: 170 }} value={1}>Reading</MenuItem>
-            <MenuItem sx={{ m: 1, minWidth: 170 }} value={2}>Finished</MenuItem>
+            <MenuItem sx={{ m: 1, minWidth: 120 }} value={0}>new</MenuItem>
+            <MenuItem sx={{ m: 1, minWidth: 120 }} value={1}>Reading</MenuItem>
+            <MenuItem sx={{ m: 1, minWidth: 120 }} value={2}>Finished</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -78,7 +77,7 @@ return (
   <Sidebar setBars={setBars} bars={bars} />
   }
 
-  <ul>
+  <ul className='list-box'>
     {
 
     filterData() && filterData().map(e => {

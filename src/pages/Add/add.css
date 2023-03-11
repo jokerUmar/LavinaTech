@@ -7,9 +7,6 @@ input{
 }
 
 .add{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     width: 100%;
 }
@@ -22,7 +19,8 @@ input{
 
 .list{
     display: block;
-    width: 270px;    
+    max-width: 270px;    
+    width: 100%;
 }
 
 .submit{
@@ -39,6 +37,11 @@ input{
   justify-content: center;
 }
 
+@media only screen and (max-width:600px) {
+    .add > .container{
+        flex-direction: column;
+    }    
+}
 
 
 

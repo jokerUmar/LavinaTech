@@ -56,14 +56,5 @@
 @media screen and (max-width:1200px) {
     .list-box{
         justify-content: center;
-    }
-    
-    .add_btn{
-        font-size: 14px;
-        width: 100%;
-        padding: 7px 0;
-        background-color: #FFD80D;
-        border-radius: 4px;
-    }
-    
+    }    
 }
