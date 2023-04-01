@@ -25,9 +25,17 @@ bgcolor: 'background.paper',
 border: '2px solid #000',
 boxShadow: 24,
 p: 4,
+width:{
+  xs:100,
+  sm:200,
+  md:300,
+  lg:400,
+  xl:500,
+}
+
 };
 
-const [open, setOpen] = React.useState(false);
+const [open, setOpen] = useState(false);
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
 
@@ -74,18 +82,14 @@ status : valueInput
 
 })
 .then((res) => {
-  let editData = res.data.data
-  data.forEach(element => {
-    if (element.book.id == editData.book.id ) {
-      element = editData
-      setData(data)
-    }
-  });
+  let findEl = data.find(e => e.book.id == res.data.data.book.id)
+  findEl.status = valueInput
+
+  setData([...data])
+  
 }).catch(err =>{
-  console.log(err?.response?.data?.message)
+  console.log(err)
 })
-
-
 };  
 
 
@@ -118,7 +122,7 @@ return (
           handleOpen()
           }}>edit</Button>
 
-        <Modal keepMounted open={open} onClose={handleClose} aria-labelledby="keep-mounted-modal-title"
+        <Modal  keepMounted open={open} onClose={handleClose} aria-labelledby="keep-mounted-modal-title"
           aria-describedby="keep-mounted-modal-description">
           <Box sx={style}>
             <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
@@ -128,7 +132,7 @@ return (
             </Typography>
 
 
-            <Box sx={{ minWidth: 120 }}>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">status</InputLabel>
                 <Select labelId="demo-simple-select-label" id="demo-simple-select" value={valueInput} label="Age"

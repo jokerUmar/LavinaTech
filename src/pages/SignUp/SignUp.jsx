@@ -22,6 +22,7 @@ function SignUp() {
         let mySecret = "MyUserSecret" + String(Math.floor(Math.random()*10000000))
 
 
+
     function Login() {
         axios.post(`https://no23.lavina.tech/signup`,{  
           name: name,
@@ -34,9 +35,13 @@ function SignUp() {
              if (name.length > 0 && email.length>0) {
                    localStorage.setItem("user" , JSON.stringify(res?.data?.data))
                     setErrorValue(true)
-                    navigate("/home")
+                    setSignLoad(false)
+                    setTimeout(() => {
+                        navigate("/home")
+                    }, 700);
             } else if(name.length == 0 && email.length == 0) {
                     setErrorValue(undefined)
+
             }
         })
         .catch(err => { 

@@ -12,10 +12,11 @@ function Home() {
 
   let {data, setData} = useContext(DataContext)
   let {dataSearch,setDataSearch} = useContext(SearchingContext)
-  
+    
   const [bars, setBars] = useState(true);           
   const [headerValue, setHeaderValue] = useState("");
   const [homeLoad, setHomeLoad] = useState(true);
+  const [responseload, setResponseload] = useState(false);
 
   function handleClick(e) {
     if (e.target != document.querySelector(".sidebar") && bars == false) {
@@ -52,22 +53,21 @@ function Home() {
         data.push(res.data.data)
       })
       .catch(err=>{
-        console.log(err?.response?.data?.message)
+        // console.log(err?.response?.data?.message)
       })
   };
 
   return (
     <div className='home' onClick={(e)=>handleClick(e)}>
       
-      <Header setHomeLoad={setHomeLoad} setBars={setBars} bars={bars} headerValue={headerValue} setHeaderValue={setHeaderValue} />
+      <Header setResponseload={setResponseload} setHomeLoad={setHomeLoad} setBars={setBars} bars={bars} headerValue={headerValue} setHeaderValue={setHeaderValue} />
 
       <div className="container">
       <ul className='list-box'>
         {
 
-          dataSearch.length ?  dataSearch.map(e => {
-            return String(e.title+e.author).length > 0 ? 
-             <li className='item' key={e.title+e.author+e.isbn}>
+          responseload?   dataSearch.map(e => {
+            return  <li className='item' key={e.title+e.isbn+e.cover}>
 
               <img src={ !e.cover ?  "https://picsum.photos/200/300" : e.cover }  alt={e.book?.cover ? "" : "image is not defined"} width={"200px"} height={"200px"} />
             
@@ -82,9 +82,10 @@ function Home() {
                     borderRadius: "4px",
                 
               }} onClick={()=>{createBook(e)}} className='add_btn' >add</Button>
-           </li> : ""
+           </li>
 
-            }) : homeLoad ? <h1 style={{color:"red",width:"100%",textAlign:"center"}}> no data </h1> : <CircularProgress color="success" />
+            }) 
+          : homeLoad ? <h1 style={{color:"red",width:"100%",textAlign:"center"}}> no data </h1> : <div style={{color:"red",width:"100%",textAlign:"center"}} > <CircularProgress color="success" /></div>
         }
     </ul>
 

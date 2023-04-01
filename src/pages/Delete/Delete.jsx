@@ -5,13 +5,22 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import { MD5 } from 'crypto-js';
 import axios from 'axios';
 import { DataContext } from '../../context/DataContext';
-import { Button } from '@mui/material';
+import { Button, IconButton, Toolbar} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+
 
 function Delete() {
 
 const [bars, setBars] = useState(true);
-const [headerValue, setHeaderValue] = useState("");
+
+
 let {data,setData} = useContext(DataContext)
+
+
+function handleLogout() {
+  localStorage.removeItem("user")
+  navigate("/")
+}
 
 function handleClick(e) {
     if (e.target != document.querySelector(".sidebar") && bars == false) {
@@ -26,7 +35,7 @@ function handleClick(e) {
   
   useEffect(()=>{
     getAllBooks()
-  },[headerValue])
+  },[])
 
 
   function getAllBooks() {
@@ -72,8 +81,22 @@ function handleClick(e) {
 
 return (
     <div className='delete' onClick={handleClick}>
-    <Header setBars={setBars} bars={bars} />
+       <div className="header">
+        <div className="container">
+            {
+            <span onClick={()=>{setBars(false)}} className={`${bars ? "" : "visibilty" }`} >
+                <Toolbar variant="dense">
+                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                        <MenuIcon />
+                    </IconButton>
+                </Toolbar>
+            </span>
 
+            }
+
+            <button className='logout' onClick={handleLogout}>logout</button>
+        </div>
+    </div>
     <div className="container">
     <div className='body'>
     <ul className='list-box'>

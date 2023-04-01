@@ -3,7 +3,7 @@ import "./add.css"
 import Card from '../../components/Card/Card'
 import axios from 'axios';
 import { MD5 , CryptoJS } from 'crypto-js';
-import { IconButton, Toolbar } from '@mui/material';
+import { CircularProgress, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -16,6 +16,7 @@ function Add() {
 const [isbn, setIsbn] = useState("");
 const [data, setData] = useState({});
 const [bars, setBars] = useState(true);
+const [addLoad, setAddLoad] = useState(false);
 
 const hashGenerator = (string) => {
 return MD5(string).toString();
@@ -29,7 +30,7 @@ setIsbn(e.target.value)
 function handleSubmit(e) {
 let isbnEl = document.querySelector('.isbn-element')
 if (isbnEl.value.length != 0 && isbnEl.value.length===13 ) {
-createBook()
+  createBook()
 }
 }
 
@@ -53,20 +54,31 @@ let str ="POSThttps://no23.lavina.tech/books" + JSON.stringify(body) + secret;
 
 let sign = hashGenerator(str);
 
-axios.post("https://no23.lavina.tech/books", body, {
-headers: {
-Key: key,
-Sign: sign,
-},
-body: {
-isbn: isbn,
-}
+setAddLoad(false)
 
+axios.post("https://no23.lavina.tech/books", body, {
+  headers: {
+    Key: key,
+    Sign: sign,
+  },
+  body: {
+    isbn: isbn,
+  }
+  
 })
 .then((res) => {
-setData(res.data?.data)
+  setData(res.data?.data)
+  setAddLoad(true)
+  setTimeout(() => {
+    setAddLoad(false)    
+  }, 500);
+  
 }).catch(err=>{
-console.log(err?.response?.data?.message)
+  setAddLoad(true)
+  setTimeout(() => {
+    setAddLoad(false)    
+  }, 500);
+  alert("bunday kitob mavjud")
 })
 };
 
@@ -96,7 +108,7 @@ return (
     <div className="take-data">
       <input type="number" min={4} minLength={1} maxLength={13} className='isbn-element' onChange={handleIsbn}
         placeholder='isbn' />
-      <Button style={{marginTop:"10px"}} variant="contained" onClick={handleSubmit}>submit</Button>
+      <Button style={{marginTop:"10px"}} variant="contained"  onClick={handleSubmit}>{addLoad ?  <CircularProgress color="secondary" /> :  "submit" }</Button>
     </div>
 
     <ul className='list'>

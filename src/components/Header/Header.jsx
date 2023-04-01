@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState,useCallback} from 'react'
 import "./header.css"
 import SearchIcon from '@mui/icons-material/Search';
 import { AppBar, IconButton, Toolbar } from '@mui/material';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import { MD5 } from 'crypto-js';
 import { SearchingContext } from '../../context/SearchingContext';
 
-function Header({bars,setBars,setHeaderValue,headerValue,setHomeLoad}) {
+function Header({bars,setBars,setHeaderValue,headerValue,setHomeLoad,setResponseload,responseload}) {
 
     let {dataSearch,setDataSearch} = useContext(SearchingContext)
 
@@ -20,17 +20,19 @@ function Header({bars,setBars,setHeaderValue,headerValue,setHomeLoad}) {
     }
 
     useEffect(()=>{
-        getSearchBooks()
+          getSearchBooks()
     },[headerValue])
-
+        
+    
+    
     function handleKeyUp(e) {
         if (e.key == "Enter") {
             setHeaderValue(e.target.value)
         }
     }
 
+        
 
-    
   const hashGenerator = (string) => {
     return MD5(string).toString();
   };
@@ -38,25 +40,30 @@ function Header({bars,setBars,setHeaderValue,headerValue,setHomeLoad}) {
   
   function getSearchBooks() {
 
+      setHomeLoad(false)
+      setResponseload(false)
 
     let {key, secret} = JSON.parse(localStorage.getItem('user'))
 
     let str =`GEThttps://no23.lavina.tech/books/${headerValue}` + secret;
     
     let sign = hashGenerator(str);
-
-    
     axios.get(`https://no23.lavina.tech/books/${headerValue}`,{
         headers:{
-          Key: key ,
-          Sign : sign
+            Key: key ,
+            Sign : sign
         }
-      })
-      .then(res => {
-        setDataSearch(res.data.data)
-        setHomeLoad(true)
     })
-      .catch(err =>console.log(err))
+    .then(res => {
+        setDataSearch(res.data.data)
+        setHomeLoad(false)
+        setResponseload(true)
+    })
+    .catch(err =>{
+        console.log(err);
+        setHomeLoad(true)
+        setResponseload(false)
+    })
   }
 
 
